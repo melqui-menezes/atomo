@@ -2,14 +2,15 @@ from django.db import models
 from django.core.validators import MinValueValidator
 
 from datetime import timedelta
-from .utils import validate_cpf, select_state
+import uuid
+from .utils import select_state, get_upload_path, contract_name
 
 class Cliente(models.Model):
 
     ativo = models.BooleanField('Ativo?', default=True)
     dt_cadastro = models.DateField('Data de cadastro', auto_now_add=True)
     dt_modificacao = models.DateTimeField('Última atualização', auto_now=True)
-    cpf = models.CharField("CPF", max_length=11, help_text="Somente números", unique=True, validators=[validate_cpf])
+    cpf = models.CharField("CPF", max_length=11, help_text="Somente números", unique=True)
     nome = models.CharField("Nome", max_length=35)
     sobrenome = models.CharField("Sobrenome", max_length=35)
     contato_1 = models.CharField("Celular", max_length=11)
@@ -25,10 +26,10 @@ class Cliente(models.Model):
 
     def __str__(self):
         return f"{self.nome} {self.sobrenome} | CPF: {self.cpf}"
-
+          
     class Meta:
-        verbose_name = "Cadastro de Cliente"
-        verbose_name_plural = "Cadastro de Clientes"
+        verbose_name = "Cliente"
+        verbose_name_plural = "Clientes"
 
 
 class Empresa(models.Model):
@@ -52,8 +53,8 @@ class Empresa(models.Model):
         return self.razao_social
 
     class Meta:
-        verbose_name = "Cadastro de Empresa"
-        verbose_name_plural = "Cadastro de Empresas"
+        verbose_name = "Empresa"
+        verbose_name_plural = "Empresas"
 
 
 class Sistema(models.Model):
@@ -68,21 +69,23 @@ class Sistema(models.Model):
         return self.sistema
     
     class Meta:
-        verbose_name = "Cadastro de Sistema"
-        verbose_name_plural = "Cadastro de Sistemas"
+        verbose_name = "Sistema"
+        verbose_name_plural = "Sistemas"
 
 
 class Contrato(models.Model):
 
     ativo = models.BooleanField('Ativo?', default=True)
+    nm_contrato = models.CharField('Contrato', max_length=60)
+    contrato_pdf = models.FileField(blank=True, null=True, upload_to=get_upload_path)
     dt_cadastro = models.DateField('Data de cadastro', auto_now_add=True)
     dt_modidicacao = models.DateTimeField('Última atualização', auto_now=True)
-    sistema = models.ForeignKey(Sistema, on_delete= models.CASCADE, verbose_name="Sistema Contratado")
+    sistema = models.ForeignKey(Sistema, on_delete= models.CASCADE, verbose_name="Sistema")
     contratante = models.ForeignKey(Empresa, on_delete= models.CASCADE, verbose_name="Contratante", related_name="empresa_contrato")
-    dt_inicio = models.DateField('Início do Contrato')
-    dt_fim = models.DateField('Encerramento do Contrato')
+    dt_inicio = models.DateField('Início')
+    dt_fim = models.DateField('Final')
     mensalidade = models.DecimalField('Valor mensal', max_digits=6, decimal_places=2,validators=[MinValueValidator(0.0)])
-    anuidade = models.DecimalField('Total do contrato', max_digits=7, decimal_places=2)
+    anuidade = models.DecimalField('Valor Total', max_digits=7, decimal_places=2)
     VENCTO = [
         ('10','Dia 10'),
         ('15','Dia 15'),
@@ -96,4 +99,11 @@ class Contrato(models.Model):
     def save(self, *args, **kwargs):
         self.anuidade = self.mensalidade * 12
         self.dt_fim = self.dt_inicio + timedelta(days=365)
+        self.nm_contrato = contract_name(self.contratante)
         super(Contrato, self).save()
+    
+    def __str__(self):
+        return self.nm_contrato
+    class Meta:
+        verbose_name = "Contrato"
+        verbose_name_plural = "Contratos"

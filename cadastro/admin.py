@@ -5,6 +5,7 @@ from .models import Cliente, Empresa, Sistema, Contrato
 
 @admin.register(Cliente)
 class ClienteAdmin(admin.ModelAdmin):
+
     list_display = [
         'nome', 
         'sobrenome', 
@@ -13,7 +14,6 @@ class ClienteAdmin(admin.ModelAdmin):
         'dt_cadastro',
         'ativo'
     ]
-
 
 @admin.register(Empresa)
 class EmpresaAdmin(admin.ModelAdmin):
@@ -36,10 +36,11 @@ class SistemaAdmin(admin.ModelAdmin):
 @admin.register(Contrato)
 class ContratoAdmin(admin.ModelAdmin):
 
-    exclude = ('dt_fim','anuidade')
+    exclude = ('dt_fim','anuidade','nm_contrato','contrato_pdf')
 
     list_display = [
         'contratante',
+        'nm_contrato',
         'sistema',
         'dt_inicio',
         'dt_fim',

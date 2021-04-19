@@ -1,14 +1,13 @@
 from django.core.exceptions import ValidationError
 import re
+from datetime import date
+import unidecode
 
 def validate_cpf(cpf):
 
     cpf = re.sub(r"\W", "", cpf)
     if re.match(r"(\d)\1{10}", cpf) or len(cpf) != 11:
-        raise ValidationError(
-            ('Por favor, insira um CPF válido'),
-            params={'cpf': cpf},
-            )
+        return False
     d1, d2, i = 0, 0, 0
     while i < 10:
         d1, d2, i = (
@@ -51,3 +50,12 @@ def select_state():
         ("TO","Tocantins")
     )
     return states
+
+def get_upload_path(nm_contrato):
+    pasta = f'media/contratos/{Contrato.contratante}/{nm_contrato}'
+    return pasta
+
+def contract_name(contrante):
+    hoje = str(date.today())
+    str_data = unidecode.unidecode(hoje.replace("-",""))
+    return f'{str_data}{contrante.cnpj}'
