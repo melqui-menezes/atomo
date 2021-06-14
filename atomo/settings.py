@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+from decouple import Csv, config
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -21,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-difxo2**97#f173avps5o-d@h55k-_%c@zs0*in#a)0)ei!j+d'
+SECRET_KEY = config("SECRET_KEY", cast=str)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -87,11 +88,11 @@ WSGI_APPLICATION = 'atomo.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'atomo',
-        'USER': 'postgres',
-        'PASSWORD': '123',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'NAME': config("DATABASE_NAME", cast=str),
+        'USER': config("DATABASE_USER", cast=str),
+        'PASSWORD': config("DATABASE_PASS", cast=str),
+        'HOST': config("DATABASE_HOST", cast=str),
+        'PORT': config("DATABASE_PORT", cast=str)
     }
 }
 
@@ -118,9 +119,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'pt-br'
+LANGUAGE_CODE = config("LANGUAGE_CODE", cast=str)
 
-TIME_ZONE = 'America/Sao_Paulo'
+TIME_ZONE = config("TIME_ZONE", cast=str)
 
 USE_I18N = True
 
