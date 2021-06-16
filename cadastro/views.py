@@ -1,11 +1,13 @@
 from django.shortcuts import render
-from django.views.generic import ListView
+from django.views.generic import ListView, TemplateView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 
 from .models import Cliente, Empresa, Sistema, Contrato
 from .forms import ClienteForm
 
+class IndexView(TemplateView):
+    template_name = 'index.html'
 class ClienteView(ListView):
     models = Cliente
     template_name = "clientes.html"
