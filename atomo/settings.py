@@ -33,9 +33,10 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-    'django_adminlte',
-    'django_adminlte_theme',
-
+    # DJANGO ADMIN INTERFACE
+    'admin_interface',
+    'colorfield',
+    # DJANGO CONTRIB
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -46,9 +47,11 @@ INSTALLED_APPS = [
 
     # EXTERNAL LIBRARIES
     'bootstrap4',
+    'ckeditor',
 
     # CREATED APP
-    'cadastro.apps.CadastroConfig',
+    'cadastro',
+    'site_admin',
 ]
 
 MIDDLEWARE = [

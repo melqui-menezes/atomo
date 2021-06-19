@@ -3,7 +3,7 @@ from django.core.validators import MinValueValidator
 
 from datetime import timedelta
 import uuid
-from .utils import select_state, get_upload_path, contract_name
+from .utils import BR_STATES, get_upload_path, contract_name
 
 class Cliente(models.Model):
 
@@ -20,8 +20,7 @@ class Cliente(models.Model):
     num_casa = models.CharField("Número", max_length=6)
     bairro = models.CharField("Bairro", max_length=50)
     cidade = models.CharField("Cidade", max_length=50)
-    UF_CHOICES = select_state()
-    estado = models.CharField('Estado', max_length=2, choices=UF_CHOICES)
+    estado = models.CharField('Estado', max_length=2, choices=BR_STATES)
     cep = models.CharField("CEP", max_length=9)
 
     def __str__(self):
@@ -44,8 +43,7 @@ class Empresa(models.Model):
     num_casa = models.CharField("Número", max_length=6)
     bairro = models.CharField("Bairro", max_length=50)
     cidade = models.CharField("Cidade", max_length=50)
-    UF_CHOICES = select_state()
-    estado = models.CharField('Estado', max_length=2, choices=UF_CHOICES)
+    estado = models.CharField('Estado', max_length=2, choices=BR_STATES)
     cep = models.CharField("CEP", max_length=9)
     contratante = models.ForeignKey(Cliente, on_delete=models.CASCADE, verbose_name="Contratante", related_name="cliente_empresa")
 
@@ -80,7 +78,7 @@ class Contrato(models.Model):
     contrato_pdf = models.FileField(blank=True, null=True, upload_to=get_upload_path)
     dt_cadastro = models.DateField('Data de cadastro', auto_now_add=True)
     dt_modidicacao = models.DateTimeField('Última atualização', auto_now=True)
-    sistema = models.ForeignKey(Sistema, on_delete= models.CASCADE, verbose_name="Sistema")
+    sistema = models.ForeignKey(Sistema, on_delete= models.CASCADE, verbose_name="Sistema", related_name='sistema_contrato')
     contratante = models.ForeignKey(Empresa, on_delete= models.CASCADE, verbose_name="Contratante", related_name="empresa_contrato")
     dt_inicio = models.DateField('Início')
     dt_fim = models.DateField('Final')
@@ -97,9 +95,10 @@ class Contrato(models.Model):
     observacoes = models.TextField('Observações', blank=True)
 
     def save(self, *args, **kwargs):
-        self.anuidade = self.mensalidade * 12
-        self.dt_fim = self.dt_inicio + timedelta(days=365)
-        self.nm_contrato = contract_name(self.contratante)
+        if not self.pk:
+            self.anuidade = self.mensalidade * 12
+            self.dt_fim = self.dt_inicio + timedelta(days=365)
+            self.nm_contrato = contract_name(self.contratante)
         super(Contrato, self).save()
     
     def __str__(self):
