@@ -1,0 +1,40 @@
+version: "3.3"
+
+services: 
+    atomo:
+        container_name: backend_atomo
+        build: .
+        command: tail -f /dev/null
+        restart: unless-stopped
+        ports: 
+            - 8000:8000
+        volumes: 
+            - .:/app
+        depends_on: 
+            - database
+        environment:
+            - PYTHONUNBUFFERED=0
+        networks:
+            - private
+    
+    database:
+        container_name: database_atomo
+        image: postgres:12.7-alpine
+        ports: 
+            - 5432:5432
+        volumes:
+            - atomo_pgdata:/var/lib/postgresql/data
+        networks: 
+            - private
+        environment:
+            POSTGRES_USER: ${DATABASE_USER}
+            POSTGRES_PASSWORD: ${DATABASE_PASS}
+            POSTGRES_DB: ${DATABASE_NAME}
+            TZ: ${TIME_ZONE}
+            PGTZ: ${TIME_ZONE}
+
+volumes:
+    atomo_pgdata:
+
+networks:
+    private:
