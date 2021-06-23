@@ -6,6 +6,9 @@ from django.urls import reverse_lazy
 from .models import Cliente, Empresa, Sistema, Contrato
 from .forms import ClienteForm
 
+
+class LoginView(TemplateView):
+    template_name = 'login.html'
 class IndexView(TemplateView):
     template_name = 'index.html'
 class ClienteView(ListView):

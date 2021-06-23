@@ -9,8 +9,13 @@ contextlib2==0.6.0
 distlib==0.3.0
 distro==1.4.0
 Django==3.2
-django-adminlte2==0.4.3
+django-admin-interface==0.16.3
 django-bootstrap4==3.0.0
+django-ckeditor==6.1.0
+django-colorfield==0.4.1
+django-flat-responsive==2.0
+django-flat-theme==1.1.4
+django-js-asset==1.2.2
 html5lib==1.0.1
 idna==2.8
 ipaddr==2.2.0
