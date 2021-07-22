@@ -1,0 +1,64 @@
+<html>
+<head>
+  <title>CONTRATO DE SUPORTE</title>
+  <style>
+    body {
+      background-color: #f7f7f7;
+    }
+    p {
+      text-align: justify;
+      text-justify: inter-word;
+      font-family:arial;
+      font-size: 12px;
+      line-height: 25px;
+    }
+    .text-right {
+      text-align: right;
+      font-family:arial;
+    }
+  </style>
+</head>
+  <body>
+  
+    <h3 class="text-right">CONTRATO Nº {{ obj.nm_contrato }}</h3>
+
+
+
+    <p>
+      A <b>ÁTOMO SERVIÇOS E EQUIPAMENTOS DE CONTROLE LTDA.</b>, situada à Rua Porto da Folha, n. 253, Bairro Getúlio Vargas, na cidade de Aracaju SE,
+      inscrita no CNPJ sob o n. 07.239.431/0001-54 e inscrição estadual n. 27.111.333-2, doravante denominda <b>CONTRATADA</b>, e;
+    </p>
+    
+    <p>
+      <b>{{ obj.contratante }}</b>, pessoa jurídica de direito privado, inscrita sob CNPJ {{  obj.contratante.cnpj }}, com sede a {{ obj.contratante.rua }},
+      {{ obj.contratante.num_casa }}, Bairro {{ obj.contratante.bairro }}, {{ obj.contratante.cidade }}, {{ obj.contratante.estado }}, doravante denominada
+      <b>CONTRANTE</b>, e neste ato representada na forma de seus atos constitutivos, por seu representante legal <b>{{ obj.contratante.contratante.nome }} {{ obj.contratante.contratante.sobrenome }}</b>,  
+      inscrito no CPF sob o nº.<b>{{ obj.contratante.contratante.cpf}}</b>, residente e domiciliado em
+    </p>
+
+    <p>
+      O Contrato de Suporte abrange o Programa Sistema Gerencial Comercial, bem como o sistema operacional e as demais ferramentas e aplicativos que se
+      encontrem instalados no computador e sejam considerados indispensáveis, bem como manutenção preventiva. O contrato não cobre troca de peças, se necessário,
+      a empresa entrará em contato para reportar o ocorrido acatando a decisão do contratante.
+      Em relação aos programas instalados, o suporte será feito remotamente, podendo ou não haver um tempo de espera para retornar o chamado, caso o problema não 
+      seja solucionado por telefone ou remotamente, a CONTRATANTE receberá uma visita técnica, a mesma será agendada de acordo com o cronograma de atividades e demandas 
+      informado pela CONTRATADA, com o objetivo de identificar e, havendo a possibilidade, dar uma resolução ao problema.
+    </p>
+    <p>
+      O período de vigência deste contrato tem a duração de 12 (doze) meses, podendo o mesmo ser renovado automaticamente pelo mesmo período, caso 
+      nenhuma das partes renuncie antes. Pode-se optar pela rescisão contratual, desde que se apresente uma notificação com uma antecedência de 30 (trinta) dias, 
+      desse modo não será aplicada nenhuma multa, do mesmo modo que não haverá reembolso ao contratante pelo tempo de serviço prestado.
+    </p>
+    <p>
+      Pelo presente contrato, fica firmado entre as partes uma anuidade no valor total de <b>R$ {{ obj.anuidade }}</b>, que se vencerá e deverá ser pago à CONTRATADA todo dia
+      <b>{{ obj.dia_vencimento }}</b> de cada mês, com o valor de <b>R$ {{ obj.mensalidade }}</b>. O não pagamento poderá incorrer na cobrança de multa por atraso, além de juros diários.
+      Após constatação de atraso por 10 (dez) dias corridos, após a data de vencimento. Fica a CONTRATADA desobrigada a continuar a prestação de serviço, como também poderá realizar
+      o ajuizamento do débito.
+    </p>
+    
+    <p></p>
+    <p></p>
+
+    <p class="text-right">Aracaju, {{ obj.dt_cadastro }}</p>
+  </body>
+</html>

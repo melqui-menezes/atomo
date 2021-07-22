@@ -1,7 +1,9 @@
-from django.core.exceptions import ValidationError
 import re
 from datetime import date
+
 import unidecode
+from django.core.exceptions import ValidationError
+
 
 def validate_cpf(cpf):
 
@@ -19,41 +21,52 @@ def validate_cpf(cpf):
         int(cpf[10]) == (11 - d2 if d2 > 1 else 0)
     )
 
-BR_STATES = (
-    ("AC","Acre"),
-    ("AL","Alagoas"),
-    ("AP","Amapá"),
-    ("AM","Amazonas"),
-    ("BA","Bahia"),
-    ("CE","Ceará"),
-    ("DF","Distrito Federal"),
-    ("ES","Espírito Santo"),
-    ("GO","Goiás"),
-    ("MA","Maranhão"),
-    ("MT","Mato Grosso"),
-    ("MS","Mato Grosso do Sul"),
-    ("MG","Minas Gerais"),
-    ("PA","Pará"),
-    ("PB","Paraíba"),
-    ("PR","Paraná"),
-    ("PE","Pernambuco"),
-    ("PI","Piauí"),
-    ("RR","Roraima"),
-    ("RO","Rondônia"),
-    ("RJ","Rio de Janeiro"),
-    ("RN","Rio Grande do Norte"),
-    ("RS","Rio Grande do Sul"),
-    ("SC","Santa Catarina"),
-    ("SP","São Paulo"),
-    ("SE","Sergipe"),
-    ("TO","Tocantins")
-    )
 
 def get_upload_path(nm_contrato):
-    pasta = f'media/contratos/{Contrato.contratante}/{nm_contrato}'
+    pasta = f"media/contratos/{Contrato.contratante}/{nm_contrato}"
     return pasta
+
 
 def contract_name(contrante):
     hoje = str(date.today())
-    str_data = unidecode.unidecode(hoje.replace("-",""))
-    return f'{str_data}{contrante.cnpj}'
+    str_data = unidecode.unidecode(hoje.replace("-", ""))
+    return f"{str_data}{contrante.cnpj}"
+
+
+VENCTO = [
+    ("10", "Dia 10"),
+    ("15", "Dia 15"),
+    ("20", "Dia 20"),
+    ("25", "Dia 25"),
+    ("28", "Dia 28"),
+]
+
+BR_STATES = (
+    ("AC", "Acre"),
+    ("AL", "Alagoas"),
+    ("AP", "Amapá"),
+    ("AM", "Amazonas"),
+    ("BA", "Bahia"),
+    ("CE", "Ceará"),
+    ("DF", "Distrito Federal"),
+    ("ES", "Espírito Santo"),
+    ("GO", "Goiás"),
+    ("MA", "Maranhão"),
+    ("MT", "Mato Grosso"),
+    ("MS", "Mato Grosso do Sul"),
+    ("MG", "Minas Gerais"),
+    ("PA", "Pará"),
+    ("PB", "Paraíba"),
+    ("PR", "Paraná"),
+    ("PE", "Pernambuco"),
+    ("PI", "Piauí"),
+    ("RR", "Roraima"),
+    ("RO", "Rondônia"),
+    ("RJ", "Rio de Janeiro"),
+    ("RN", "Rio Grande do Norte"),
+    ("RS", "Rio Grande do Sul"),
+    ("SC", "Santa Catarina"),
+    ("SP", "São Paulo"),
+    ("SE", "Sergipe"),
+    ("TO", "Tocantins"),
+)

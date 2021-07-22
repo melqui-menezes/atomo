@@ -5,6 +5,7 @@ services:
         container_name: backend_atomo
         build: .
         command: tail -f /dev/null
+        # command: bash -c "python3 manage.py runserver 0:8000"
         restart: unless-stopped
         ports: 
             - 8000:8000

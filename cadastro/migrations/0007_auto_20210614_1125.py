@@ -6,24 +6,24 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('cadastro', '0006_alter_contrato_nm_contrato'),
+        ("cadastro", "0006_alter_contrato_nm_contrato"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='cliente',
-            options={'verbose_name': 'Cliente', 'verbose_name_plural': 'Clientes'},
+            name="cliente",
+            options={"verbose_name": "Cliente", "verbose_name_plural": "Clientes"},
         ),
         migrations.AlterModelOptions(
-            name='contrato',
-            options={'verbose_name': 'Contrato', 'verbose_name_plural': 'Contratos'},
+            name="contrato",
+            options={"verbose_name": "Contrato", "verbose_name_plural": "Contratos"},
         ),
         migrations.AlterModelOptions(
-            name='empresa',
-            options={'verbose_name': 'Empresa', 'verbose_name_plural': 'Empresas'},
+            name="empresa",
+            options={"verbose_name": "Empresa", "verbose_name_plural": "Empresas"},
         ),
         migrations.AlterModelOptions(
-            name='sistema',
-            options={'verbose_name': 'Sistema', 'verbose_name_plural': 'Sistemas'},
+            name="sistema",
+            options={"verbose_name": "Sistema", "verbose_name_plural": "Sistemas"},
         ),
     ]
